@@ -1,27 +1,25 @@
 package com.example.multiscreentemplate
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.Snackbar
+import androidx.compose.material.SnackbarHost
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import com.example.multiscreentemplate.ui.AppState
 import com.example.multiscreentemplate.ui.BottomNavigationBar
 import com.example.multiscreentemplate.ui.TopBar
+import com.example.multiscreentemplate.ui.rememberMyAppState
 import com.example.multiscreentemplate.ui.theme.MultiScreenTemplateTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,25 +32,43 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyApp(vm: MainViewModel = viewModel()) {
-    MultiScreenTemplateTheme() {
-        val navController = rememberNavController()
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
+fun MyApp() {
+
+    MultiScreenTemplateTheme {
+        val appState: AppState = rememberMyAppState()
+        val navBackStackEntry by appState.navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
         val currentRoute = currentDestination?.route
-        val currentScreen = tabScreens.find { it.route == currentRoute } ?: MainScreen
+        val currentScreen = tabScreens.find { it.route == currentRoute } ?: MainScreenDest
 
         Scaffold(
+            scaffoldState = appState.scaffoldState,
+            snackbarHost = {
+                // reuse default SnackbarHost to have default animation and timing handling
+                SnackbarHost(it) { data ->
+                    // custom snackbar with the custom colors
+                    Snackbar(
+                        actionColor = Color.Green,
+                        //contentColor = ...,
+                        snackbarData = data
+                    )
+                }
+            },
             topBar = { TopBar(currentScreen) },
-            bottomBar = { BottomNavigationBar(currentScreen, navController) },
+            bottomBar = { BottomNavigationBar(currentScreen, appState.navController) },
             content = { innerPadding ->
-                AppNavHost(
-                    navController = navController,
-                    modifier = Modifier
-                        .padding(innerPadding)
-                        .fillMaxSize()
-                        .background(color = MaterialTheme.colors.background)
-                )
+                Box (modifier = Modifier.padding(innerPadding)) {
+                    AppNavHost(
+                        navController = appState.navController,
+                        showSnackbar = { message ->
+                            appState.showSnackbar(message = message)
+                        },
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxSize()
+                            .background(color = MaterialTheme.colors.background)
+                    )
+                }
             }
         )
     }
