@@ -22,19 +22,19 @@ interface ScreenDestination {
 /**
  * app navigation destinations
  */
-object MainScreen : ScreenDestination {
+object MainScreenDest : ScreenDestination {
     override val icon = Icons.Filled.Home
     override val label = "Main Screen"
     override val route = "main_screen_route"
 }
 
-object SecondScreen : ScreenDestination {
+object SecondScreenDest : ScreenDestination {
     override val icon = Icons.Filled.Menu
     override val label = "Second Screen"
     override val route = "second_screen_route"
 }
 
-object ThirdScreen : ScreenDestination {
+object ThirdScreenDest : ScreenDestination {
     override val icon = Icons.Filled.Settings
     override val label = "Third Screen"
     override val route = "third_screen_route"
@@ -43,4 +43,4 @@ object ThirdScreen : ScreenDestination {
 
 
 // Screens to be displayed in the Navigation Bar
-val tabScreens = listOf(MainScreen, SecondScreen, ThirdScreen)
+val tabScreens = listOf(MainScreenDest, SecondScreenDest, ThirdScreenDest)

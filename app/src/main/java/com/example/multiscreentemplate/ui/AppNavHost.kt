@@ -16,38 +16,33 @@ import com.example.multiscreentemplate.ui.ThirdScreen
 @Composable
 fun AppNavHost(
     navController: NavHostController,
+    showSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
         navController = navController,
-        startDestination = MainScreen.route,
+        startDestination = MainScreenDest.route,
         modifier = modifier
     ) {
-        composable(route = MainScreen.route) {
+        composable(route = MainScreenDest.route) {
             MainScreen(
+                navController = navController,
+                showSnackbar = showSnackbar,
                 modifier = modifier,
-                onButtonClick = {
-                    navController.navigateSingleTopTo(SecondScreen.route)
-                }
             )
         }
-        composable(route = SecondScreen.route) {
+        composable(route = SecondScreenDest.route) {
             SecondScreen(
-                modifier = modifier,
-                onButtonClickBack = {
-                    navController.navigateSingleTopTo(MainScreen.route)
-                },
-                onButtonClickForward = {
-                    navController.navigateSingleTopTo(ThirdScreen.route)
-                }
+                navController = navController,
+                showSnackbar = showSnackbar,
+                modifier = modifier
             )
         }
-        composable(route = ThirdScreen.route) {
+        composable(route = ThirdScreenDest.route) {
             ThirdScreen(
-                modifier = modifier,
-                onButtonClick = {
-                    navController.navigateSingleTopTo(MainScreen.route)
-                }
+                navController = navController,
+                showSnackbar = showSnackbar,
+                modifier = modifier
             )
         }
     }
