@@ -2,6 +2,7 @@ package com.example.multiscreentemplate
 
 
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -29,10 +30,20 @@ class MainViewModel @Inject constructor(
     var clickCounter by mutableStateOf(0)
         private set
 
+
+    init {
+        Log.i(">>>>>", "loading Preferences")
+        val savedPreferences = preferences.loadSavedPreferences()
+        clickCounter = savedPreferences.clicks
+    }
+
+    // Main Screen Events
+
     fun onClickCounterButtonClick() {
         clickCounter++
         preferences.saveClicks(clickCounter)
-        if (clickCounter == 4) onFourTimesClicked()
+        Log.i(">>>>>", "Saving clickCounter = $clickCounter")
+        if (clickCounter % 4 == 0) onFourTimesClicked()
     }
 
     fun onSecondScreenButtonClick() {
@@ -53,16 +64,19 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
-    var snackbarMsg by mutableStateOf("")
-
-    // Hilfsfunktion informUser()
-    // setzt snackbarMsg und triggert damit showSnackbar
-    fun informUser(msg: String) {
-        snackbarMsg = msg
+    fun onClickShowSnackbar() {
+        viewModelScope.launch {
+            _uiEvent.send(
+                UiEvent.ShowSnackbar(
+                    UiText.DynamicString(randomString())
+                )
+            )
+            return@launch
+        }
     }
 
-
+    // Second Screen Events
+    // ...
 
     // helper functions
     fun randomString(length: Int = 5): String {

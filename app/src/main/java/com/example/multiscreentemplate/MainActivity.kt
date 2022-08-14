@@ -63,9 +63,6 @@ fun MyApp() {
                     AppNavHost(
                         scaffoldState = appState.scaffoldState,
                         navController = appState.navController,
-                        showSnackbar = { message ->
-                            appState.showSnackbar(message = message)
-                        },
                         modifier = Modifier
                             .padding(innerPadding)
                             .fillMaxSize()

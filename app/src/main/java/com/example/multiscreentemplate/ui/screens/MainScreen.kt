@@ -7,26 +7,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.multiscreentemplate.MainViewModel
 import com.example.multiscreentemplate.R
-import com.example.multiscreentemplate.SecondScreenDest
-import com.example.multiscreentemplate.navigateSingleTopTo
 import com.example.multiscreentemplate.ui.util.UiEvent
-import kotlinx.coroutines.flow.collect
 
 @Composable
 fun MainScreen(
     scaffoldState: ScaffoldState,
     onNavigate: (UiEvent.Navigate) -> Unit,
-    showSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
     vm: MainViewModel = hiltViewModel()
 ) {
@@ -48,8 +44,6 @@ fun MainScreen(
     }
 
 
-    if (vm.snackbarMsg.isNotEmpty()) showSnackbar(vm.snackbarMsg)
-
     Column (
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -69,7 +63,7 @@ fun MainScreen(
         ) { Text(stringResource(R.string.click_counter_txt, vm.clickCounter)) }
 
         OutlinedButton(
-            onClick = { vm.informUser(vm.randomString()) }
+            onClick = { vm.onClickShowSnackbar() }
         ) { Text("show Snackbar") }
     }
 

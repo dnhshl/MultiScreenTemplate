@@ -17,13 +17,7 @@ class AppState(
     val scope: CoroutineScope,
     val navController: NavHostController
 
-) {
-
-    fun showSnackbar(message: String) {
-        scope.launch { scaffoldState.snackbarHostState.showSnackbar(message,"OK")  }
-
-    }
-}
+)
 
 @Composable
 fun rememberMyAppState(

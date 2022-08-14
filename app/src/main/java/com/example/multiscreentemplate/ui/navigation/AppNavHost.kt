@@ -20,7 +20,6 @@ import com.example.multiscreentemplate.ui.util.UiEvent
 fun AppNavHost(
     scaffoldState: ScaffoldState,
     navController: NavHostController,
-    showSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -32,21 +31,20 @@ fun AppNavHost(
             MainScreen(
                 scaffoldState = scaffoldState,
                 onNavigate = navController::navigateSingleTopTo,
-                showSnackbar = showSnackbar,
                 modifier = modifier
             )
         }
         composable(route = SecondScreenDest.route) {
             SecondScreen(
+                scaffoldState = scaffoldState,
                 onNavigate = navController::navigateSingleTopTo,
-                showSnackbar = showSnackbar,
                 modifier = modifier
             )
         }
         composable(route = ThirdScreenDest.route) {
             ThirdScreen(
+                scaffoldState = scaffoldState,
                 onNavigate = navController::navigateSingleTopTo,
-                showSnackbar = showSnackbar,
                 modifier = modifier
             )
         }
