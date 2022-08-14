@@ -9,14 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.multiscreentemplate.MainScreenDest
-import com.example.multiscreentemplate.MainViewModel
-import com.example.multiscreentemplate.navigateSingleTopTo
+import com.example.multiscreentemplate.*
+import com.example.multiscreentemplate.ui.util.UiEvent
 
 @Composable
-fun ThirdScreen(
+fun SecondScreen(
+    onNavigate: (UiEvent.Navigate) -> Unit,
     showSnackbar: (String) -> Unit,
-    navController: NavHostController,
     modifier: Modifier = Modifier,
     vm: MainViewModel = viewModel()
 ) {
@@ -27,10 +26,14 @@ fun ThirdScreen(
         verticalArrangement = Arrangement.Center,
         modifier = modifier
     ) {
-        Text(text = "Third Screen")
+        Text(text = "Second Screen")
 
         OutlinedButton(
-            onClick = { navController.navigateSingleTopTo(MainScreenDest.route) }
+            onClick = { onNavigate(UiEvent.Navigate(MainScreenDest.route)) }
         ) { Text("to Main Screen") }
+
+        OutlinedButton(
+            onClick = { onNavigate(UiEvent.Navigate(ThirdScreenDest.route)) }
+        ) { Text("to Third Screen") }
     }
 }

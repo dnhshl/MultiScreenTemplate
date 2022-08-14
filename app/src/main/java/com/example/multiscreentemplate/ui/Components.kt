@@ -7,8 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.multiscreentemplate.ScreenDestination
+import com.example.multiscreentemplate.SecondScreenDest
 import com.example.multiscreentemplate.navigateSingleTopTo
 import com.example.multiscreentemplate.tabScreens
+import com.example.multiscreentemplate.ui.util.UiEvent
 
 @Composable
 fun TopBar(
@@ -41,8 +43,8 @@ fun BottomNavigationBar(
             BottomNavigationItem(
                 icon = { Icon(imageVector = screen.icon, contentDescription = screen.label) },
                 label = { Text(text = screen.label) },
-                //selectedContentColor = Color.White,
-                //unselectedContentColor = Color.White.copy(0.4f),
+                selectedContentColor = MaterialTheme.colors.secondary,
+                unselectedContentColor = MaterialTheme.colors.onPrimary.copy(0.8f),
                 alwaysShowLabel = true,
                 selected = (currentScreen.route == screen.route),
                 onClick = {
