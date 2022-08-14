@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.multiscreentemplate.*
@@ -17,7 +18,7 @@ fun SecondScreen(
     onNavigate: (UiEvent.Navigate) -> Unit,
     showSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier,
-    vm: MainViewModel = viewModel()
+    vm: MainViewModel = hiltViewModel()
 ) {
     if (vm.snackbarMsg.isNotEmpty()) showSnackbar(vm.snackbarMsg)
 

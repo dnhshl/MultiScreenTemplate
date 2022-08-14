@@ -21,7 +21,9 @@ import com.example.multiscreentemplate.ui.BottomNavigationBar
 import com.example.multiscreentemplate.ui.TopBar
 import com.example.multiscreentemplate.ui.rememberMyAppState
 import com.example.multiscreentemplate.ui.theme.MultiScreenTemplateTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +61,7 @@ fun MyApp() {
             content = { innerPadding ->
                 Box (modifier = Modifier.padding(innerPadding)) {
                     AppNavHost(
+                        scaffoldState = appState.scaffoldState,
                         navController = appState.navController,
                         showSnackbar = { message ->
                             appState.showSnackbar(message = message)

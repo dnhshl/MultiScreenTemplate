@@ -1,5 +1,6 @@
 package com.example.multiscreentemplate
 
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -17,6 +18,7 @@ import com.example.multiscreentemplate.ui.util.UiEvent
  */
 @Composable
 fun AppNavHost(
+    scaffoldState: ScaffoldState,
     navController: NavHostController,
     showSnackbar: (String) -> Unit,
     modifier: Modifier = Modifier
@@ -28,9 +30,10 @@ fun AppNavHost(
     ) {
         composable(route = MainScreenDest.route) {
             MainScreen(
+                scaffoldState = scaffoldState,
                 onNavigate = navController::navigateSingleTopTo,
                 showSnackbar = showSnackbar,
-                modifier = modifier,
+                modifier = modifier
             )
         }
         composable(route = SecondScreenDest.route) {
